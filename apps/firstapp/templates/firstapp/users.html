@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Users</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+</head>
+    <style>
+        .red {
+            color: red;
+        }
+
+        .header1{
+            margin-left: 600px;
+            display: inline;
+        }
+        .header2{
+            display: inline;
+        }
+
+    </style>
+<body>
+    <form class="header1" action='/quotes' method='post'>
+        {% csrf_token %}
+        <input type="submit" value="Dashboard">
+    </form>
+    <form class="header2" action='/logout' method='post'>
+        {% csrf_token %}
+        <input type="submit" value="Logout">
+    </form>
+    {% for u in user %}
+        <p>Posts by {{ u.name }}</p>
+    
+    <p>Count: {{ count }} </p>
+     {% endfor %}
+    <br>
+    <br>
+    {% for item in quotes %}
+        <p><span class="red">{{ item.author }}:</span> {{ item.message }}</p>
+        <br>
+    {% endfor %}
+</body>
+</html>

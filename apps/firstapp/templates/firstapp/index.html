@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Login and Registration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+    <style>
+        .red{
+            color: red;
+        }
+    </style>
+<body>
+    <div class="wrapper">
+
+        <h2>Registration</h2>
+        <form action='/process' method='post'>
+        {% csrf_token %}
+            {% if messages %}
+                {% for message in messages %}
+                        <p class="red">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+            Name:
+                <input type="text" name="name">
+                <br>
+                <form action='/process' method='post'>
+            Alias:
+                <input type="text" name="alias">
+                <br>
+                <form action='/process' method='post'>
+            E-Mail:
+                <input type="text" name="email">
+                <br>
+                <form action='/process' method='post'>
+            Password:
+                <input type="password" name="password">
+                <br>
+                <form action='/process' method='post'>
+            Confirm Password:
+                <input type="password" name="confirm_password">
+                <br>
+             Date of Birth: 
+                <input type="date" name="birthdate">
+             <br>
+                <input type="submit">
+           
+        </form>
+        <h2>Login</h2>
+        <form action='/login' method='post'>
+         {% csrf_token %}
+         E-Mail:
+            <input type="text" name="email">
+            <br>
+            <form action='/login' method='post'>
+        Password:
+            <input type="password" name="password">
+            <br>
+            <form action='/login' method='post'>
+            <input type="submit" value="Login">
+        </form>
+    </div>
+</body>
+
+</html>

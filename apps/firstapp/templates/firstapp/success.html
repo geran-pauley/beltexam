@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Success</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+    <style>
+    *{
+        margin: 0px;
+    }
+
+    .wrapper{
+        height: 640px;
+    }
+
+    .header{
+        margin: 15px;
+        display: inline-block;
+    }
+
+    .content{
+        height: 590px;
+        margin-left: 15px;
+        overflow: scroll;
+        position: absolute;
+    }
+
+    .quotes{
+        display: inline;
+        font-weight: normal;
+    }
+
+     .favorites{
+         display: inline;
+         font-weight: normal;
+         position: relative;
+         left: 800px;
+         top: 0px;
+    }
+
+     .contribute{
+         display: inline;
+         font-weight: normal;
+         position: relative;
+         left: 800px;
+         top: 300px;
+    }
+
+    .messagebox{
+        height: 100px;
+    }
+
+    .red{
+        color: red;
+    }
+
+    .quotebox{
+        width: 250px;
+        height: 150px;
+        border: 1px solid black;
+        margin-bottom: 4px;
+    }
+
+    .header2{
+        margin-left: 900px;
+        display: inline;
+    }
+    </style>
+<body>
+    <div class="wrapper">
+        <div class="header">
+        <form class="header2" action='/logout' method='post'>
+            {% csrf_token %}
+            <input type="submit" value="Logout">
+        </form>
+        <h3>Welcome, {{ request.session.name }}!</h3>
+        </div>
+        <div class="content">
+            <h4 class="quotes">Quotable Quotes:</h4>
+            {% for item in quotes %}
+                <p class="quotebox">{{ item.author }}: {{ item.message }}
+                    <br> posted by <a href="users/{{ item.poster.id }}">{{ item.poster.name }}</a>
+                    <form action="/addfav/{{ item.id }}"><input type="submit" value="Add to My List"></form>
+                </p>
+            {% endfor %}
+        </div>
+        <div class="favorites">
+            <h4>Your Favorites:</h4>
+            {% for item in favorites %}
+                <p class="quotebox">{{ item.author }}: {{ item.message }}
+                    <br> posted by <a href="users/{{ item.poster.id }}">{{ item.poster.name }}</a>
+                    <br> <form action="/removefav/{{ item.id }}"><input type="submit" value="Remove from My List"></form>
+                </p>
+                
+            {% endfor %}
+        </div>
+        <div class="contribute">
+            {% if messages %}
+                {% for message in messages %}
+                        <p class="red">{{ message }}</p>
+                    
+                {% endfor %}
+            {% endif %} 
+            <h4>Contribute a Quote:</h4>
+
+            <form action='/addquote' method='POST'>
+                {% csrf_token %}
+                <p>Quoted By
+                    <input type="text" name="author">
+                </p>
+                <p>Message:
+                    <input class="messagebox" type="textbox" name="message">
+                </p>
+                <input type="submit" value="Add Quote">
+            </form>
+        </div>
+    </div>
+</body>
+</html>
